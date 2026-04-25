@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user preferences, risk tolerance, and metadata.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "riskTolerance": { "type": "string", "enum": ["low", "medium", "high"] },
+        "language": { "type": "string", "enum": ["en", "es", "fr", "de", "zh"] },
+        "worldIdVerified": { "type": "boolean" },
+        "totalBalance": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Portfolio": {
+      "title": "User Portfolio",
+      "description": "Tracks micro-investments and assets.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "assets": { "type": "array" },
+        "totalValue": { "type": "number" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId"]
+    },
+    "EarningTask": {
+      "title": "AI Earning Task",
+      "description": "Tasks for AI generalists and linguistic experts.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "reward": { "type": "number" },
+        "type": { "type": "string", "enum": ["annotation", "rating", "translation"] },
+        "difficulty": { "type": "string" }
+      }
+    },
+    "UserProgress": {
+      "title": "Learning Progress",
+      "description": "Tracks gamified learning achievements.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "completedModules": { "type": "array" },
+        "currentLevel": { "type": "number" },
+        "xp": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Primary user profile storage."
+    },
+    "/portfolios/{userId}": {
+      "schema": "Portfolio",
+      "description": "Investment portfolio data for each user."
+    },
+    "/tasks/{taskId}": {
+      "schema": "EarningTask",
+      "description": "Available earning opportunities."
+    },
+    "/progress/{userId}": {
+      "schema": "UserProgress",
+      "description": "Learning path tracking."
+    }
+  }
+}
